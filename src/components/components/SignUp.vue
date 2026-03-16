@@ -1,10 +1,15 @@
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from "vue-router";
+import {useAuth} from '../../services/auth'
+
+const router = useRouter();
+const {  register, loading, error } = useAuth()
 
   const rules = {
     required: value => !!value || 'Required.',
     min: v => v.length >= 8 || 'Min 8 characters',
-    emailMatch: () => (`The email and password you entered don't match`),
+    passwordMatch:()=>password === confirmPassword || 'Passwords must match'
   }
 
   const show1 = ref(false)
@@ -23,27 +28,34 @@ import { ref } from 'vue'
   const dob=ref(null)
   const gymLocation=ref(null)
 
-  function signUp(){
-    //create user object
+  const signUp = async () => {
 
-    //store data
-    const userDetails={
-        name:firstName.value + lastName.value,
-        email:email.value,
-        phone:phoneNumber.value,
-        dob:dob.value,
-        gender:gender.value,
-        gymLocation:gymLocation.value,
-        password:password.value,
-    }
+    loading.value = true;
+    error.value = "";
 
-    //store data
-    try{
-        localStorage.setItem('userDetails', JSON.stringify(userDetails))
-    }catch(err){
-        console.error('Sign up process failed',err)
+    const formData = new FormData();
+    formData.append("name", firstName.value +' '+ lastName.value,);
+    formData.append("email", email.value);
+    formData.append("phone", phoneNumber.value);
+    formData.append("dob", dob.value);
+    formData.append("gender", gender.value);
+    formData.append("gymLocation", gymLocation.value);
+    formData.append("password", password.value);
+    formData.append("role_id", 4);
+
+    try {
+        await register(formData)
+    
+        // Redirect after successful signup
+        router.push('/homepage').then(() => {
+            router.go(0); // Reloads the current route
+        });
+    } catch (err) {
+        // Error is already handled by the auth service
+        console.error('Sign up failed', err)
     }
-  }
+};
+
 </script>
 
 <template>
@@ -53,7 +65,7 @@ import { ref } from 'vue'
                 <v-form>
                     <v-row>
                         <v-col md="12">
-                            <v-icon color="#3A4B68" icon="mdi-weight-lifter" size="x-large"></v-icon>
+                            <v-img src="Black and White Modern Fitness Logo.png" class="mx-auto" md="12"></v-img>
                         </v-col>
                     </v-row>
                     <v-row>
@@ -148,7 +160,7 @@ import { ref } from 'vue'
                              <v-text-field
                                     v-model="confirmPassword"
                                     :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                                    :rules="[rules.required, rules.min]"
+                                    :rules="[rules.required, rules.min,rules.passwordMatch,]"
                                     :type="show1 ? 'text' : 'password'"
                                     variant="outlined"
                                     @click:append="show1confirm = !show1confirm "
@@ -162,7 +174,9 @@ import { ref } from 'vue'
                     </v-row>
                     <v-row>
                         <v-col md="12">
-                            <div>New to MacFit Gym? Create an account.</div>
+                            <div>Alreadyhave an account?
+                                <router-link to="/login">Back to login</router-link>
+                            </div>
                         </v-col>
                     </v-row>
                 </v-form>

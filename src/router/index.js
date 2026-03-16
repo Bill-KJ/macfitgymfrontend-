@@ -32,8 +32,8 @@ const router = createRouter({
     component: HomePage,
    },
    {
-    path:'/Gymlocation',
-    name:'Gymlocation',
+    path:'/Gymlocations',
+    name:'Gymlocations',
     component: GymLocations,
    },
    {
