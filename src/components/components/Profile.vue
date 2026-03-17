@@ -1,11 +1,12 @@
 <script setup> 
-      const  userDetails = JSON.parse(localStorage.getItem('userDetails'))
+      const  userDetails = JSON.parse(localStorage.getItem('user'))
 </script>
 
 <template>
     <v-container style="background-color: bisque" class="mt-12" width="50%">
         <v-row>
             <v-col>
+                <v-card>
                 <v-img src=""class="h-50"cover></v-img>
                 <v-card-text>{{ userDetails.name }}</v-card-text>
                 <v-card-text>{{ userDetails.email}}</v-card-text>
@@ -17,6 +18,7 @@
                 <div v-else>
                     <v-btn color="primary" variant="outlined" to="/bundles">Select a bundle</v-btn>
                 </div>
+                </v-card>
             </v-col>
         </v-row>
     </v-container>

@@ -36,7 +36,7 @@ const {  register, loading, error } = useAuth()
     const formData = new FormData();
     formData.append("name", firstName.value +' '+ lastName.value,);
     formData.append("email", email.value);
-    formData.append("phone", phoneNumber.value);
+    formData.append("phoneNumber", phoneNumber.value);
     formData.append("dob", dob.value);
     formData.append("gender", gender.value);
     formData.append("gymLocation", gymLocation.value);
