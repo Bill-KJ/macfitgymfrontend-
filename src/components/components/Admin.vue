@@ -77,7 +77,7 @@ const roles = ref(null)
 const equipment = ref(null)
 const equipmentName=ref(null)
 const usage =ref(null)
-const modelNumber=ref(null)
+const modelNo=ref(null)
 const equipmentValue=ref(null)
 const status =ref(null)
 
@@ -100,7 +100,7 @@ async function addEquipment(){
     const formData = new FormData()
     formData.append("name", equipmentName.value,);
     formData.append("usage", usage.value);
-    formData.append("model_no", modelNumber.value);
+    formData.append("model_no", modelNo n.value);
     formData.append("value", equipmentValue.value);
     formData.append("status", status.value);
 
@@ -137,8 +137,8 @@ function close(){
 
   //equipment
 
-   equipmentName.value = null
     equipmentName.value = null
+    usage.value = null
     modelNo.value = null
     equipmentValue.value = null
     status.value = null
