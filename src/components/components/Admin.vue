@@ -100,7 +100,7 @@ async function addEquipment(){
     const formData = new FormData()
     formData.append("name", equipmentName.value,);
     formData.append("usage", usage.value);
-    formData.append("model_no", modelNo n.value);
+    formData.append("model_no", modelNo .value);
     formData.append("value", equipmentValue.value);
     formData.append("status", status.value);
 
